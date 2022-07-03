@@ -18,10 +18,31 @@ app.use(express.json());
 // serve static files.
 app.use(express.static(path.join(__dirname, '/public')));
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
-app.get('^/$|/index(.html)?',(req,res)=>{
-    res.sendFile(path.join(__dirname,'views', 'index.html'));
+app.get('^/$|/index?',(req,res)=>{
+    res.render('index');
 });
+app.get('^/about?',(req,res)=>{
+    res.render('about');
+});
+app.get('^/contact?',(req,res)=>{
+    res.render('contact');
+});
+app.get('^/cart?',(req,res)=>{
+    res.render('cart');
+});
+app.get('^/account?',(req,res)=>{
+    res.render('account');
+});
+app.get('^/register?',(req,res)=>{
+    res.render('register');
+});
+
+app.get('*', (req, res)=> {
+    res.status(404).render('404');
+  });
 //res.sendFile('./views/index.html',{ root: dirname });
 
 app.listen(PORT, () => {
