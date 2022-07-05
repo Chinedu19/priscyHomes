@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const PORT = process.env.PORT || 3500;
 const cors = require('cors')
+const {UserLogin} = require('./controller/userAuth')
 
 // built-in middleware to handle urlencoded data.
 // in other words,form data:
@@ -22,22 +23,34 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.set('view engine', 'ejs');
 
 app.get('^/$|/index?',(req,res)=>{
-    res.render('index');
+    res.render('index',{title: 'Home'});
 });
 app.get('^/about?',(req,res)=>{
-    res.render('about');
+    res.render('about', {title: 'About'});
+});
+app.get('^/product-details?',(req,res)=>{
+    res.render('product-details');
 });
 app.get('^/contact?',(req,res)=>{
-    res.render('contact');
+    res.render('contact', {title: 'Contact'});
+});
+app.get('^/properties?',(req,res)=>{
+    res.render('shop', {title: 'Properties'});
 });
 app.get('^/cart?',(req,res)=>{
-    res.render('cart');
+    res.render('cart', {title: 'Cart'});
 });
 app.get('^/account?',(req,res)=>{
-    res.render('account');
+    res.render('account', {title: 'Account'});
 });
 app.get('^/register?',(req,res)=>{
-    res.render('register');
+    res.render('register', {title: 'Register'});
+});
+app.get('^/login?',(req,res)=>{
+    res.render('login', {title: 'Sign-in'});
+});
+app.post('^/login?',(req,res)=>{
+    UserLogin(req,res)
 });
 
 app.get('*', (req, res)=> {
