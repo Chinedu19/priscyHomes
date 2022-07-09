@@ -1,9 +1,25 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const PORT = process.env.PORT || 3500;
 const cors = require('cors')
-const {UserLogin} = require('./controller/userAuth')
+var createError = require('http-errors');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var expressValidator = require('express-validator');
+var flash = require('express-flash');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+ 
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
+ 
+var mysql = require('mysql');
+var connection  = require('./lib/db');
+ 
+var authRouter = require('./routes/auth');
+ 
+var app = express();
 
 // built-in middleware to handle urlencoded data.
 // in other words,form data:
@@ -21,6 +37,31 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+// view engine setup
+ 
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+ 
+app.use(session({ 
+    secret: '123456cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}))
+ 
+app.use(flash());
+// app.use(expressValidator());
+ 
+app.use('/auth', authRouter);
+ 
+// catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
+
 
 app.get('^/$|/index?',(req,res)=>{
     res.render('index',{title: 'Home'});
@@ -36,6 +77,14 @@ app.get('^/contact?',(req,res)=>{
 });
 app.get('^/properties?',(req,res)=>{
     res.render('shop', {title: 'Properties'});
+});
+app.get('^/login?',(req,res)=>{
+    res.render('login');
+});
+app.post('/login-form', function (req, res) {
+    res.sendFile(__dirname + '/auth');
+	var email = req.body.email;
+var password = req.body.password;
 });
 app.get('^/cart?',(req,res)=>{
     res.render('cart', {title: 'Cart'});
