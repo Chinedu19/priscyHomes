@@ -9,10 +9,8 @@ var expressValidator = require('express-validator');
 var flash = require('express-flash');
 var session = require('express-session');
 var bodyParser = require('body-parser');
- 
-const { PrismaClient } = require('@prisma/client')
+var router = express.Router();
 
-const prisma = new PrismaClient()
  
 var mysql = require('mysql');
 var connection  = require('./lib/db');
@@ -72,14 +70,10 @@ app.get('^/about?',(req,res)=>{
 app.get('^/contact?',(req,res)=>{
     res.render('contact');
 });
-app.get('^/login?',(req,res)=>{
+app.get('^/login?', (req,res)=>{   
     res.render('login');
 });
-app.post('/login-form', function (req, res) {
-    res.sendFile(__dirname + '/auth');
-	var email = req.body.email;
-var password = req.body.password;
-});
+
 app.get('^/cart?',(req,res)=>{
     res.render('cart');
 });
