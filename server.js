@@ -18,6 +18,7 @@ var mysql = require('mysql');
 var connection  = require('./lib/db');
  
 var authRouter = require('./routes/auth');
+const Property = require('./model/Property');
  
 var app = express();
 
@@ -69,14 +70,39 @@ app.get('^/$|/index?',(req,res)=>{
 app.get('^/about?',(req,res)=>{
     res.render('about', {title: 'About'});
 });
-app.get('^/product-details?',(req,res)=>{
-    res.render('product-details');
+app.get('^/property/:slug?',(req,res)=>{
+    const product_title = req.params.slug
+    const property = Property.getProperty({title : product_title.replace(/-/g,' ')})
+    property.then(data=>{
+        res.render('product-details', {property: data});
+    })
 });
 app.get('^/contact?',(req,res)=>{
     res.render('contact', {title: 'Contact'});
 });
 app.get('^/properties?',(req,res)=>{
-    res.render('shop', {title: 'Properties'});
+    const allProperty = Property.getAllProperties()
+    // if (!allProperty) {
+    //     throw new Error('Error! No users found!')
+    // }
+    // Access the provided 'page' and 'limt' query parameters
+    let searchQuery = req.query.search;
+    if (typeof searchQuery === 'string' && searchQuery.length > 1){
+        const propertySearch = Property.searchProperty({title: {
+            search: searchQuery
+          }})
+
+          propertySearch.then((data)=>{
+            res.render('shop', {title: 'Properties', properties: data});
+          })
+    }
+    else{
+        allProperty.then(data =>{
+    
+            console.log(data)
+            res.render('shop', {title: 'Properties', properties: data});
+        })
+    }
 });
 app.get('^/login?',(req,res)=>{
     res.render('login');
