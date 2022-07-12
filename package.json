@@ -26,6 +26,5 @@
     "slugify": "^1.6.5"
   },
   "devDependencies": {
-    "prisma": "^4.0.0"
   }
 }
