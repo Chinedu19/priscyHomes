@@ -16,6 +16,7 @@ var mysql = require('mysql');
 var connection  = require('./lib/db');
  
 var authRouter = require('./routes/auth');
+const Property = require('./model/Property');
  
 var app = express();
 
@@ -62,26 +63,63 @@ app.use('/auth', authRouter);
 
 
 app.get('^/$|/index?',(req,res)=>{
-    res.render('index');
+    res.render('index',{title: 'Home'});
 });
 app.get('^/about?',(req,res)=>{
-    res.render('about');
+    res.render('about', {title: 'About'});
+});
+app.get('^/property/:slug?',(req,res)=>{
+    const product_title = req.params.slug
+    const property = Property.getProperty({title : product_title.replace(/-/g,' ')})
+    property.then(data=>{
+        res.render('product-details', {property: data});
+    })
 });
 app.get('^/contact?',(req,res)=>{
-    res.render('contact');
+    res.render('contact', {title: 'Contact'});
+});
+app.get('^/properties?',(req,res)=>{
+    const allProperty = Property.getAllProperties()
+    // if (!allProperty) {
+    //     throw new Error('Error! No users found!')
+    // }
+    // Access the provided 'page' and 'limt' query parameters
+    let searchQuery = req.query.search;
+    if (typeof searchQuery === 'string' && searchQuery.length > 1){
+        const propertySearch = Property.searchProperty({title: {
+            search: searchQuery
+          }})
+
+          propertySearch.then((data)=>{
+            res.render('shop', {title: 'Properties', properties: data});
+          })
+    }
+    else{
+        allProperty.then(data =>{
+    
+            console.log(data)
+            res.render('shop', {title: 'Properties', properties: data});
+        })
+    }
 });
 app.get('^/login?', (req,res)=>{   
     res.render('login');
 });
 
 app.get('^/cart?',(req,res)=>{
-    res.render('cart');
+    res.render('cart', {title: 'Cart'});
 });
 app.get('^/account?',(req,res)=>{
-    res.render('account');
+    res.render('account', {title: 'Account'});
 });
 app.get('^/register?',(req,res)=>{
-    res.render('register');
+    res.render('register', {title: 'Register'});
+});
+app.get('^/login?',(req,res)=>{
+    res.render('login', {title: 'Sign-in'});
+});
+app.post('^/login?',(req,res)=>{
+    UserLogin(req,res)
 });
 
 app.get('*', (req, res)=> {

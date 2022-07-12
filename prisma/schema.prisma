@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -25,6 +26,8 @@ model properties {
   tags        String            @db.Text
   date_time   DateTime          @default(now()) @db.DateTime(0)
   realtorId   Int
+
+  @@fulltext([title])
 }
 
 model transactions {
