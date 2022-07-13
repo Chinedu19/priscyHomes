@@ -9,17 +9,16 @@ var expressValidator = require('express-validator');
 var flash = require('express-flash');
 var session = require('express-session');
 var bodyParser = require('body-parser');
- 
+
+var {alert}  = require('node-popup');
 const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
  
 var mysql = require('mysql');
 var connection  = require('./lib/db');
- 
 var authRouter = require('./routes/auth');
 const Property = require('./model/Property');
- 
 var app = express();
 
 // built-in middleware to handle urlencoded data.
