@@ -13,7 +13,6 @@ var bodyParser = require('body-parser');
 var {alert}  = require('node-popup');
 const { PrismaClient } = require('@prisma/client')
 
-const prisma = new PrismaClient()
  
 var mysql = require('mysql');
 var connection  = require('./lib/db');
@@ -103,14 +102,10 @@ app.get('^/properties?',(req,res)=>{
         })
     }
 });
-app.get('^/login?',(req,res)=>{
+app.get('^/login?', (req,res)=>{   
     res.render('login');
 });
-app.post('/login-form', function (req, res) {
-    res.sendFile(__dirname + '/auth');
-	var email = req.body.email;
-var password = req.body.password;
-});
+
 app.get('^/cart?',(req,res)=>{
     res.render('cart', {title: 'Cart'});
 });
