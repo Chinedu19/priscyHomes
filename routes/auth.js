@@ -2,7 +2,7 @@ var express = require('express');
 var connection = require('../lib/db');
 const mysql = require('mysql');
 var router = express.Router();
-var {alert}  = require('node-popup');
+var { alert } = require('node-popup');
 
 
 var connection = mysql.createConnection({
@@ -79,10 +79,7 @@ router.post('/post-register', function (req, res, next) {
 
 })
 
-
-
 //add-property
-
 router.post('/add-property', function (req, res, next) {
   var input_data = {
     title: req.body.title,
@@ -102,40 +99,8 @@ router.post('/add-property', function (req, res, next) {
   connection.query('INSERT INTO properties SET ?', input_data, function (err, result) {
     if (err) throw err
     console.log(err);
-    alert('Successfully added a property!');
     console.log('Successfully added a property!')
-    res.redirect('/account');
-
+    res.render('account', { msg2: 'Property added successfully!' });
   })
 })
-//authenticate user
-router.post('/authentication', function(req, res, next) {
-var email = req.body.email;
-var password = req.body.password;
-connection.connect(function(error){
-    if(!!error){
-      console.log(error);
-    }else{
-      console.log('Connected!:)');
-    }
-  }); 
-connection.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function(err, rows, fields) {
-if(err) throw err
-
-// if user not found
-if (rows.length <= 0) {
-req.flash('error', 'Please correct enter email and Password!')
-res.redirect('/login')
-}
-else { // if user found
-// render to views/user/edit.ejs template file
-req.session.loggedin = true;
-req.session.email = email;
-res.redirect('/account');
-}
-connection.end();            
-})
-})
-//display login page
-
 module.exports = router;
