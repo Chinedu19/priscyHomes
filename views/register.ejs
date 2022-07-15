@@ -12,6 +12,7 @@
         <!-- Add your site or application content here -->
 
         <!-- Body main wrapper start -->
+       
         <div class="body-wrapper">
             <%- include('./partials/nav'); %>
 
@@ -26,7 +27,7 @@
                                     <h1 class="page-title">Account</h1>
                                     <div class="ltn__breadcrumb-list">
                                         <ul>
-                                            <li><a href="index.html"><span class="ltn__secondary-color"><i
+                                            <li><a href="index"><span class="ltn__secondary-color"><i
                                                             class="fas fa-home"></i></span> Home</a></li>
                                             <li>Register</li>
                                         </ul>
@@ -37,7 +38,7 @@
                     </div>
                 </div>
                 <!-- BREADCRUMB AREA END -->
-
+              
                 <!-- LOGIN AREA START (Register) -->
                 <div class="ltn__login-area pb-110">
                     <div class="container">
@@ -50,15 +51,20 @@
                                 </div>
                             </div>
                         </div>
+                        <% if (messages.error) { %>
+                            <p style="color:red; margin-left:150px;"><%- messages.error %></p>
+                            <% } %>
+                            <% if (messages.success) { %>
+                            <p style="color:green; margin-left:150px;"><%- messages.success %></p>
+                            <% } %>
                         <div class="row">
                             <div class="col-lg-6 offset-lg-3">
                                 <div class="account-login-inner">
-                                    <form action="#" class="ltn__form-box contact-form-box">
-                                        <input type="text" name="firstname" placeholder="First Name">
-                                        <input type="text" name="lastname" placeholder="Last Name">
+                                    <form action="/auth/post-register" method="post" class="ltn__form-box contact-form-box">
+                                        <input type="text" name="full_name" placeholder="Full Name">
                                         <input type="text" name="email" placeholder="Email*">
                                         <input type="password" name="password" placeholder="Password*">
-                                        <input type="password" name="confirmpassword" placeholder="Confirm Password*">
+                                        <input type="password" name="confirm_password" placeholder="Confirm Password*">
                                         <label class="checkbox-inline">
                                             <input type="checkbox" value="">
                                             I consent to Herboil processing my personal data in order to send
@@ -70,8 +76,10 @@
                                             By clicking "create account", I consent to the privacy policy.
                                         </label>
                                         <div class="btn-wrapper">
+                                           <a href="auth/register">
                                             <button class="theme-btn-1 btn reverse-color btn-block" type="submit">CREATE
                                                 ACCOUNT</button>
+                                           </a> 
                                         </div>
                                     </form>
                                     <div class="by-agree text-center">
@@ -79,7 +87,7 @@
                                         <p><a href="#">TERMS OF CONDITIONS &nbsp; &nbsp; | &nbsp; &nbsp; PRIVACY
                                                 POLICY</a></p>
                                         <div class="go-to-btn mt-50">
-                                            <a href="login.html">ALREADY HAVE AN ACCOUNT ?</a>
+                                            <a href="auth/login">ALREADY HAVE AN ACCOUNT ?</a>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +102,7 @@
 
         </div>
         <!-- Body main wrapper end -->
-
+       
         <!-- All JS Plugins -->
         <script src="js/plugins.js"></script>
         <!-- Main JS -->

@@ -4,7 +4,6 @@
 <%- include('./partials/head', {title: 'Login' }); %>
 
     <body>
-
         <!-- Add your site or application content here -->
         <%- include('./partials/nav'); %>
             <!-- Body main wrapper start -->
@@ -13,6 +12,7 @@
                 <div class="ltn__utilize-overlay"></div>
 
 
+               
                 <!-- LOGIN AREA START -->
                 <div class="ltn__login-area pb-65">
                     <div class="container">
@@ -24,14 +24,20 @@
                                 </div>
                             </div>
                         </div>
+                        <% if (messages.error) { %>
+                            <p style="color:red; margin-left:50px;"><%- messages.error %></p>
+                            <% } %>
+                            <% if (messages.success) { %>
+                            <p style="color:green; margin-left:50px;"><%- messages.success %></p>
+                            <% } %>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="account-login-inner">
-                                    <form action="login-form" class="ltn__form-box contact-form-box">
+                                    <form action="/auth/authentication" method="post" class="ltn__form-box contact-form-box">
                                         <input type="email" name="email" placeholder="Email*">
                                         <input type="password" name="password" placeholder="Password*">
                                         <div class="btn-wrapper mt-0">
-                                            <button class="theme-btn-1 btn btn-block" type="submit">SIGN IN</button>
+                                           <a href="auth/login"><button class="theme-btn-1 btn btn-block" type="submit">SIGN IN</button></a>
                                         </div>
                                         <div class="go-to-btn mt-20">
                                             <a href="#" title="Forgot Password?" data-bs-toggle="modal"
@@ -46,7 +52,7 @@
                                     <h4>DON'T HAVE AN ACCOUNT?</h4>
                                     <p></p>
                                     <div class="btn-wrapper">
-                                        <a href="register.html" class="theme-btn-1 btn black-btn">CREATE ACCOUNT</a>
+                                        <a href="register" class="theme-btn-1 btn black-btn">CREATE ACCOUNT</a>
                                     </div>
                                 </div>
                             </div>

@@ -72,7 +72,7 @@
         </div>
     </div>
     <!-- CONTACT ADDRESS AREA END -->
-    
+
     <!-- CONTACT MESSAGE AREA START -->
     <div class="ltn__contact-message-area mb-120 mb--100">
         <div class="container">
@@ -80,7 +80,10 @@
                 <div class="col-lg-12">
                     <div class="ltn__form-box contact-form-box box-shadow white-bg">
                         <h4 class="title-2">Get A Quote</h4>
-                        <form id="contact-form" action="mail.php" method="post">
+                        <%   if(typeof msg != "undefined" && msg) { %>
+                        <h4><%= msg %></h4>
+                        <% }    %>
+                        <form action="send" method="POST">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-item input-item-name ltn__custom-icon">
@@ -94,7 +97,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-item">
-                                        <select class="nice-select">
+                                        <select class="nice-select" name="service">
                                             <option>Select Service Type</option>
                                             <option>Property Management </option>
                                             <option>Mortgage Service </option>
@@ -116,9 +119,10 @@
                             </div>
                             <p><label class="input-info-save mb-0"><input type="checkbox" name="agree"> Save my name, email, and website in this browser for the next time I comment.</label></p>
                             <div class="btn-wrapper mt-0">
-                                <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">get a free service</button>
+                                <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">
+                                    get a free service</button>
                             </div>
-                            <p class="form-messege mb-0 mt-20"></p>
+                            <!-- <p class="form-messege mb-0 mt-20"></p> -->
                         </form>
                     </div>
                 </div>
