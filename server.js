@@ -10,8 +10,7 @@ var flash = require('express-flash');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var router = express.Router();
-
- 
+const paystack = require('./controller/paystack')
 var mysql = require('mysql');
 var connection  = require('./lib/db');
  
@@ -75,8 +74,38 @@ app.get('^/property/:slug?',(req,res)=>{
         res.render('product-details', {property: data});
     })
 });
+app.post('^/paystack/pay?', (req, res) => {
+    const form = {
+        full_name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        amount: parseInt(req.body.amount),
+    }
+    console.log(form)
+    form.metadata = {
+        full_name : form.full_name
+    }
+    form.amount *= 100;
+    const {initializePayment}= paystack()
+
+    const payment = initializePayment(form).then((data)=>{
+        var response = data;
+        res.redirect(response.data.data.authorization_url)
+    }
+    ).catch(
+        (err)=>{
+            res.redirect('/404')
+        }
+    )
+    
+    
+});
+
 app.get('^/contact?',(req,res)=>{
     res.render('contact', {title: 'Contact'});
+});
+app.get('^/error?',(req,res)=>{
+    res.render('error');
 });
 app.get('^/properties?',(req,res)=>{
     const allProperty = Property.getAllProperties()

@@ -18,7 +18,8 @@
                 <!-- IMAGE SLIDER AREA START (img-slider-3) -->
                 <div class="ltn__img-slider-area mb-90">
                     <div class="container-fluid">
-                        <div class="row ltn__image-slider-5-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
+                        <div
+                            class="row ltn__image-slider-5-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
                             <% property.images.split(',').forEach((info)=> { %>
                                 <div class="col-lg-12">
                                     <div class="ltn__img-slide-item-4">
@@ -46,11 +47,16 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <h1><%= property.title %></h1>
+                                    <h1>
+                                        <%= property.title %>
+                                    </h1>
                                     <label><span class="ltn__secondary-color"><i class="flaticon-pin"></i></span>
-                                        <%= property.location %>, Abuja</label>
+                                        <%= property.location %>, Abuja
+                                    </label>
                                     <h4 class="title-2">Description</h4>
-                                    <p><%= property.description %></p>
+                                    <p>
+                                        <%= property.description %>
+                                    </p>
                                     <p>To the left is the modern kitchen, leading through to the
                                         unique breakfast family room which feature glass walls and doors out onto the
                                         garden and access to the separate utility room.</p>
@@ -58,13 +64,23 @@
                                     <h4 class="title-2">Property Detail</h4>
                                     <div class="property-detail-info-list section-bg-1 clearfix mb-60">
                                         <ul>
-                                            <li><label>Home Area: </label> <span><%= property.size %> sqft</span></li>
-                                            <li><label>Rooms:</label> <span><%= property.bedrooms %></span></li>
-                                            <li><label>Baths:</label> <span><%= property.bathroom %></span></li>
+                                            <li><label>Home Area: </label> <span>
+                                                    <%= property.size %> sqft
+                                                </span></li>
+                                            <li><label>Rooms:</label> <span>
+                                                    <%= property.bedrooms %>
+                                                </span></li>
+                                            <li><label>Baths:</label> <span>
+                                                    <%= property.bathroom %>
+                                                </span></li>
                                         </ul>
                                         <ul>
-                                            <li><label>Price:</label> <span><%= property.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") %></span></li>
-                                            <li><label>Property Status:</label> <span>For <%= property.status %></span></li>
+                                            <li><label>Price:</label> <span>
+                                                    <%= property.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&," )
+                                                        %>
+                                                </span></li>
+                                            <li><label>Property Status:</label> <span>For <%= property.status %></span>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -94,13 +110,14 @@
                                                 <div class="ltn__menu-widget">
                                                     <ul>
                                                         <% property.amenities.split(',').forEach((info)=> { %>
-                                                        <li>
-                                                            <label class="checkbox-item"><%= info %> 
-                                                                <input type="checkbox" checked="checked">
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                        </li>
-                                                        <% }) %> 
+                                                            <li>
+                                                                <label class="checkbox-item">
+                                                                    <%= info %>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="checkmark"></span>
+                                                                </label>
+                                                            </li>
+                                                            <% }) %>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -265,8 +282,8 @@
                             <div class="col-lg-4">
                                 <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar---">
                                     <!-- CTA button -->
-                                    <a href="#" type="submit" class="btn theme-btn-1 my-3 w-100">Buy Now</a>
-                                    
+                                    <a href="#" type="submit" data-bs-toggle="modal" data-bs-target="#ltn_buy_now_modal" class="btn theme-btn-1 my-3 w-100">Buy Now</a>
+
                                     <div class="widget ltn__form-widget mt-6">
                                         <h4 class="ltn__widget-title ltn__widget-title-border-2">Drop Messege For Book
                                         </h4>
@@ -311,7 +328,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
 
                                     <!-- Social Media Widget -->
                                     <div class="widget ltn__social-media-widget">
@@ -329,7 +346,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Banner Widget -->
                                     <div class="widget ltn__banner-widget d-none">
                                         <a href="shop.html"><img src="/img/banner/2.jpg" alt="#"></a>
@@ -906,6 +923,57 @@
                     </div>
                     <!-- MODAL AREA END -->
 
+
+                    <!-- MODAL AREA START (Payment) -->
+                    <div class="ltn__modal-area ltn__add-to-cart-modal-area----">
+                        <div class="modal fade" id="ltn_buy_now_modal" tabindex="-1">
+                            <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="ltn__quick-view-modal-inner">
+                                            <div class="modal-product-item">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="modal-product-info text-center">
+                                                            <h4>Pay now</h4>
+                                                            <p class="added-cart"> After payment, you'll get a call from our representative</p>
+                                                            <form action="/paystack/pay" method="post" class="ltn__form-box">
+                                                                <input type="text" name="name"
+                                                                    placeholder="Full Name *" required>
+                                                                <input type="email" name="email"
+                                                                    placeholder="Email Address *" required>
+                                                                <input type="text" name="phone"
+                                                                    placeholder="Phone Number *" required>
+                                                                <input type="hidden" name="amount" value="<%= property.price %>">
+                                                                <div class="btn-wrapper mt-0">
+                                                                    <button class="theme-btn-1 btn btn-full-width-2"
+                                                                        type="submit">Submit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <!-- additional-info -->
+                                                        <div class="additional-info d-none">
+                                                            <p>We want to give you <b>10% discount</b> for your first
+                                                                order, <br> Use discount code at checkout</p>
+                                                            <div class="payment-method">
+                                                                <img src="img/icons/payment.png" alt="#">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL AREA END -->
         </div>
         <!-- Body main wrapper end -->
 

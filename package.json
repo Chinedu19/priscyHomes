@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.0.0",
+    "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "ejs": "^3.1.8",
@@ -24,7 +25,5 @@
     "mysql": "^2.18.1",
     "path": "^0.12.7",
     "slugify": "^1.6.5"
-  },
-  "devDependencies": {
   }
 }
